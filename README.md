@@ -40,7 +40,21 @@ printf("\nAverage Turnaround Time : %.2f\n", avg_tat / n);
 return 0;
 }
 ```
+### Output 
+```
+Enter number of processes: 3
+Enter Process ID and Burst Time for process 1: 1 5
+Enter Process ID and Burst Time for process 2: 2 3 
+Enter Process ID and Burst Time for process 3: 3 8
 
+PID     Burst Time      Waiting Time    Turnaround Time
+1       5               0               5
+2       3               5               8
+3       8               8               16
+
+Average Waiting Time : 4.33
+Average Turnaround Time : 9.67
+```
 ## 2.Write a program to demonstrate the use of SJF CPU Scheduling algorithm.
 
 ```
