@@ -101,7 +101,21 @@ printf("\nAverage Turnaround Time : %.2f\n", avg_tat / n);
 return 0;
 }
 ```
+### Output
+```
+Enter number of processes: 3
+Enter Process ID and Burst Time for process 1: 1 6
+Enter Process ID and Burst Time for process 2: 2 2
+Enter Process ID and Burst Time for process 3: 3 8
 
+PID     Burst Time      Waiting Time    Turnaround Time
+2       2               0               2
+1       6               2               8
+3       8               8               16
+
+Average Waiting Time : 3.33
+Average Turnaround Time : 8.67
+```
 ## 3.Write a program to demonstrate the use of Priority CPU Scheduling algorithm.
 
 ```
@@ -149,6 +163,22 @@ printf("\nAverage Waiting Time : %.2f", avg_wt / n);
 printf("\nAverage Turnaround Time : %.2f\n", avg_tat / n);
 return 0;
 }
+```
+
+### Output
+```
+Enter number of processes: 3
+Enter PID, Burst Time, Priority for process 1: 1 6 2
+Enter PID, Burst Time, Priority for process 2: 2 4 1
+Enter PID, Burst Time, Priority for process 3: 3 5 3
+
+PID     Burst   Priority        Waiting Time    Turnaround Time
+2       4       1               0               4
+1       6       2               4               10
+3       5       3               10              15
+
+Average Waiting Time : 4.67
+Average Turnaround Time : 9.67
 ```
 
 ## 4. Write a program to demonstrate the use of Round Robin CPU Scheduling algorithm.
@@ -210,6 +240,21 @@ return 0;
 }
 ```
 
+### Output
+```Enter number of processes: 3
+Enter Process ID and Burst Time for process 1: 1 5
+Enter Process ID and Burst Time for process 2: 2 8
+Enter Process ID and Burst Time for process 3: 3 6
+Enter Time Quantum: 2
+
+PID     Burst Time      Waiting Time    Turnaround Time
+1       5               8               13
+2       8               11              19
+3       6               11              17
+
+Average Waiting Time : 10.00
+Average Turnaround Time : 16.33
+```
 ## 5.Write a program to demonstrate the use of FIFO Page Replacement algorithm.
 
 ```
@@ -267,6 +312,29 @@ return 0;
 }
 ```
 
+### Output
+```
+Enter number of frames: 3
+Enter number of pages in reference string: 12
+Enter the page reference string: 1 2 3 4 1 2 5 1 2 3 4 5
+
+Page    Frames                  Status
+1       1 - -           Page Fault
+2       1 2 -           Page Fault
+3       1 2 3           Page Fault
+4       4 2 3           Page Fault
+1       4 1 3           Page Fault
+2       4 1 2           Page Fault
+5       5 1 2           Page Fault
+1       5 1 2           Page Hit
+2       5 1 2           Page Hit
+3       5 3 2           Page Fault
+4       5 3 4           Page Fault
+5       5 3 4           Page Hit
+
+Total Page Faults : 9
+Total Page Hits : 3
+```
 ## 6.Write a program to demonstrate the use of LRU Page Replacement algorithm.
 
 
@@ -332,6 +400,30 @@ printf("\nTotal Page Faults : %d\n", faults);
 printf("Total Page Hits : %d\n", pages - faults);
 return 0;
 }
+```
+
+### Output
+```
+Enter number of frames: 3
+Enter number of pages in reference string: 12
+Enter the page reference string: 1 2 3 4 1 2 5 1 2 3 4 5
+
+Page    Frames                  Status
+1       1 - -           Page Fault
+2       1 2 -           Page Fault
+3       1 2 3           Page Fault
+4       4 2 3           Page Fault
+1       4 1 3           Page Fault
+2       4 1 2           Page Fault
+5       5 1 2           Page Fault
+1       5 1 2           Page Hit
+2       5 1 2           Page Hit
+3       3 1 2           Page Fault
+4       3 4 2           Page Fault
+5       3 4 5           Page Fault
+
+Total Page Faults : 10
+Total Page Hits : 2
 ```
 
 ## 7.Write a program to demonstrate the use of the deadlock detection algorithm.
@@ -412,6 +504,30 @@ return 0;
 }
 ```
 
+### Output
+```
+Enter number of processes: 5
+Enter number of resource types: 3
+Enter Allocation Matrix:
+0 1 0
+2 0 0
+3 0 2
+2 1 1
+0 0 2
+Enter Maximum Matrix:
+7 5 3
+3 2 2
+9 0 2
+2 2 2
+4 3 3
+Enter Available Resources:
+3 3 2
+
+System is in a SAFE state.
+Safe Sequence: P1 P3 P4 P0 P2
+```
+
+
 ## 8.Write a program to demonstrate the use of FCFS disk scheduling algorithm.
 
 
@@ -444,6 +560,26 @@ return 0;
 }
 ```
 
+### Output
+
+
+```
+Enter initial head position: 50
+Enter number of disk requests: 8
+Enter disk request queue: 55 58 60 70 18 90 150 38
+
+Servicing Order         Head Movement
+50 -> 55                5 cylinders
+55 -> 58                3 cylinders
+58 -> 60                2 cylinders
+60 -> 70                10 cylinders
+70 -> 18                52 cylinders
+18 -> 90                72 cylinders
+90 -> 150               60 cylinders
+150 -> 38               112 cylinders
+
+Total Head Movement: 316 cylinders
+```
 ## 9.Write a program to demonstrate the use of SCAN disk scheduling algorithm.
 
 ```
@@ -495,6 +631,30 @@ return 0;
 }
 ```
 
+### Output
+
+
+```
+Enter initial head position: 50
+Enter number of disk requests: 8
+Enter disk request queue: 55 58 60 70 18 90 150 38
+
+SCAN Scheduling (Elevator Algorithm):
+
+Forward sweep (toward higher cylinders):
+50 -> 55
+55 -> 58
+58 -> 60
+60 -> 70
+70 -> 90
+90 -> 150
+
+Reverse sweep (toward lower cylinders):
+150 -> 38
+38 -> 18
+
+Total Head Movement: 232 cylinders
+```
 ## 10.Write a program to simulate the paging technique and segmentation technique of memory management.
 
 ```
@@ -577,4 +737,49 @@ else
 printf("Invalid choice. Please enter 1 or 2.\n");
 return 0;
 }
+```
+
+### Output 
+```
+1. Paging
+2. Segmentation
+Enter your choice: 1
+
+--- PAGING ---
+Enter page size (in bytes): 256
+Enter number of pages: 4
+Enter frame number for each page (page table):
+ Page 0 -> Frame: 0 
+ Page 1 -> Frame: 1
+ Page 2 -> Frame: 2
+ Page 3 -> Frame: 3
+Enter logical address to translate: 500
+
+Logical Address : 500
+Page Number (p) : 1
+Page Offset (d) : 244
+Frame Number (f) : 1 (from page table)
+Physical Address : 500 [f * page_size + d = 1 * 256 + 244]
+
+
+
+
+===== Memory Management Simulation =====
+1. Paging
+2. Segmentation
+Enter your choice: 2
+
+--- SEGMENTATION ---
+Enter number of segments: 3
+Segment 0 - Enter base address and limit: 1000 300
+Segment 1 - Enter base address and limit: 2000 400
+Segment 2 - Enter base address and limit: 3000 500
+Enter segment number: 1
+Enter offset within segment: 250
+
+Segment Base : 2000
+Segment Limit : 400
+Requested Offset: 250
+Physical Address : 2250 [base + offset = 2000 + 250]
+PS C:\Users\santo\OneDrive\Desktop\AI Engineer Road Map> 
 ```
