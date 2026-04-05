@@ -655,132 +655,113 @@ Reverse sweep (toward lower cylinders):
 
 Total Head Movement: 232 cylinders
 ```
-## 10.Write a program to simulate the paging technique and segmentation technique of memory management.
+## 10.Write a program to simulate the paging technique of memory management.
 
 ```
-#include <stdio.h>
-/* -------- PAGING SIMULATION -------- */
-void paging()
-{
-int page_size, num_pages, i;
-printf("\n--- PAGING ---\n");
-printf("Enter page size (in bytes): ");
-scanf("%d", &page_size);
-printf("Enter number of pages: ");
-scanf("%d", &num_pages);
-int page_table[num_pages];
-printf("Enter frame number for each page (page table):\n");
-for (i = 0; i < num_pages; i++)
-{
-printf(" Page %d -> Frame: ", i);
-scanf("%d", &page_table[i]);
+#include<stdio.h>
+
+int main(){
+    int ps,ms,np,i,la,pg,off,f=0,pt[50];
+
+    printf("Enter page size, memory size, no. of pages: ");
+    scanf("%d%d%d",&ps,&ms,&np);
+
+    int nf=ms/ps;
+    printf("\nTotal Frames: %d\n\nPage\tFrame\n",nf);
+
+    for(i=0;i<np;i++){
+        pt[i]=(f<nf)?f++:-1;
+        printf("%d\t%d\n",i,pt[i]);
+    }
+
+    char c='y';
+    while(c=='y'){
+        printf("\nEnter logical address: ");
+        scanf("%d",&la);
+        pg=la/ps; off=la%ps;
+        if(pg<np && pt[pg]!=-1)
+            printf("Physical address: %d\n",pt[pg]*ps+off);
+        else
+            printf("Page not found!\n");
+        printf("Try another? (y/n): ");
+        scanf(" %c",&c);
+    }
+
+    return 0;
 }
-int logical_addr;
-printf("Enter logical address to translate: ");
-scanf("%d", &logical_addr);
-int page_num = logical_addr / page_size;
-int offset = logical_addr % page_size;
-int phys_addr = page_table[page_num] * page_size + offset;
-printf("\nLogical Address : %d", logical_addr);
-printf("\nPage Number (p) : %d", page_num);
-printf("\nPage Offset (d) : %d", offset);
-printf("\nFrame Number (f) : %d (from page table)", page_table[page_num]);
-printf("\nPhysical Address : %d [f * page_size + d = %d * %d + %d]\n",
-phys_addr, page_table[page_num], page_size, offset);
-}
-/* -------- SEGMENTATION SIMULATION -------- */
-void segmentation()
-{
-int num_seg, i;
-printf("\n--- SEGMENTATION ---\n");
-printf("Enter number of segments: ");
-scanf("%d", &num_seg);
-int base[num_seg], limit[num_seg];
-for (i = 0; i < num_seg; i++)
-{
-printf("Segment %d - Enter base address and limit: ", i);
-scanf("%d %d", &base[i], &limit[i]);
-}
-int seg_num, offset;
-printf("Enter segment number: ");
-scanf("%d", &seg_num);
-printf("Enter offset within segment: ");
-scanf("%d", &offset);
-printf("\nSegment Base : %d", base[seg_num]);
-printf("\nSegment Limit : %d", limit[seg_num]);
-printf("\nRequested Offset: %d\n", offset);
-if (offset < limit[seg_num])
-{
-int phys_addr = base[seg_num] + offset;
-printf("Physical Address : %d [base + offset = %d + %d]\n",
-phys_addr, base[seg_num], offset);
-}
-else
-{
-printf("SEGMENTATION FAULT! Offset (%d) >= Limit (%d). Access denied.\n",
-offset, limit[seg_num]);
-}
-}
-int main()
-{
-int choice;
-printf("===== Memory Management Simulation =====\n");
-printf("1. Paging\n");
-printf("2. Segmentation\n");
-printf("Enter your choice: ");
-scanf("%d", &choice);
-if (choice == 1)
-paging();
-else if (choice == 2)
-segmentation();
-else
-printf("Invalid choice. Please enter 1 or 2.\n");
-return 0;
+```
+
+### Output
+
+```
+Enter page size, memory size, no. of pages: 4 32 5
+
+Total Frames: 8
+
+Page    Frame
+0       0
+1       1
+2       2
+3       3
+4       4
+
+Enter logical address: 13
+Physical address: 13
+
+Try another? (y/n): y
+
+Enter logical address: 99
+Page not found!
+
+Try another? (y/n): n
+```
+## 11.Write a program to simulate the segmentation technique of memory management.
+
+```
+#include<stdio.h>
+
+int main(){
+    int n, i, la, seg, off;
+    printf("Enter number of segments: ");
+    scanf("%d",&n);
+
+    int base[n], limit[n];
+    for(i=0;i<n;i++){
+        printf("Base and limit of segment %d: ",i);
+        scanf("%d%d",&base[i],&limit[i]);
+    }
+
+    char c='y';
+    while(c=='y'){
+        printf("\nEnter segment no. and offset: ");
+        scanf("%d%d",&seg,&off);
+        if(seg<n && off<limit[seg])
+            printf("Physical address: %d\n", base[seg]+off);
+        else
+            printf("Segmentation fault!\n");
+        printf("Try another? (y/n): ");
+        scanf(" %c",&c);
+    }
+
+    return 0;
 }
 ```
 
 ### Output 
 ```
-1. Paging
-2. Segmentation
-Enter your choice: 1
-
---- PAGING ---
-Enter page size (in bytes): 256
-Enter number of pages: 4
-Enter frame number for each page (page table):
- Page 0 -> Frame: 0 
- Page 1 -> Frame: 1
- Page 2 -> Frame: 2
- Page 3 -> Frame: 3
-Enter logical address to translate: 500
-
-Logical Address : 500
-Page Number (p) : 1
-Page Offset (d) : 244
-Frame Number (f) : 1 (from page table)
-Physical Address : 500 [f * page_size + d = 1 * 256 + 244]
-
-
-
-
-===== Memory Management Simulation =====
-1. Paging
-2. Segmentation
-Enter your choice: 2
-
---- SEGMENTATION ---
 Enter number of segments: 3
-Segment 0 - Enter base address and limit: 1000 300
-Segment 1 - Enter base address and limit: 2000 400
-Segment 2 - Enter base address and limit: 3000 500
-Enter segment number: 1
-Enter offset within segment: 250
+Base and limit of segment 0: 100 50
+Base and limit of segment 1: 200 80
+Base and limit of segment 2: 400 60
 
-Segment Base : 2000
-Segment Limit : 400
-Requested Offset: 250
-Physical Address : 2250 [base + offset = 2000 + 250]
-PS C:\Users\santo\OneDrive\Desktop\AI Engineer Road Map> 
+Enter segment no. and offset: 1 30
+Physical address: 230
+
+Try another? (y/n): y
+
+Enter segment no. and offset: 2 70
+Segmentation fault!
+
+Try another? (y/n): n
 ```
 
